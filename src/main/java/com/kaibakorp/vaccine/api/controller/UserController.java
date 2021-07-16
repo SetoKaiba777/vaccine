@@ -1,10 +1,9 @@
 package com.kaibakorp.vaccine.api.controller;
 
-import com.kaibakorp.vaccine.api.rpmodel.ConversionUser;
+import com.kaibakorp.vaccine.api.conversion.ConversionUser;
 import com.kaibakorp.vaccine.api.rpmodel.UserDTO;
 import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
 import com.kaibakorp.vaccine.domain.model.User;
-import com.kaibakorp.vaccine.domain.repository.UserRepository;
 import com.kaibakorp.vaccine.domain.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

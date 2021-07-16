@@ -1,7 +1,7 @@
 package com.kaibakorp.vaccine.domain.service;
 
 
-import com.kaibakorp.vaccine.api.rpmodel.ConversionUser;
+import com.kaibakorp.vaccine.api.conversion.ConversionUser;
 import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
 import com.kaibakorp.vaccine.domain.exception.ServiceException;
 import com.kaibakorp.vaccine.domain.model.User;

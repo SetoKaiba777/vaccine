@@ -1,5 +1,7 @@
-package com.kaibakorp.vaccine.api.rpmodel;
+package com.kaibakorp.vaccine.api.conversion;
 
+import com.kaibakorp.vaccine.api.rpmodel.UserDTO;
+import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
 import com.kaibakorp.vaccine.domain.model.User;
 import org.modelmapper.ModelMapper;
 
@@ -11,7 +13,7 @@ public class ConversionUser {
         return modelMapper.map(userDTO, User.class);
     }
 
-    public static UserResponse toResponse(User user,ModelMapper modelMapper){
+    public static UserResponse toResponse(User user, ModelMapper modelMapper){
         return modelMapper.map(user,UserResponse.class);
     }
     public List<UserResponse> list(List<User> users,ModelMapper modelMapper){
