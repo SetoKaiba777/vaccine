@@ -1,19 +1,17 @@
 package com.kaibakorp.vaccine.domain.service;
 
 
-import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
+import com.kaibakorp.vaccine.api.rpmodel.ConversionUser;
 import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
 import com.kaibakorp.vaccine.domain.exception.ServiceException;
 import com.kaibakorp.vaccine.domain.model.User;
 import com.kaibakorp.vaccine.domain.repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Transactional
 @Service
@@ -21,11 +19,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UserResponse> list(ModelMapper modelMapper){
-        List<User> users = userRepository.findAll();
-        return users.stream().
-                    map(user -> user.toResponse(modelMapper)).
-                    collect(Collectors.toList());
+    ConversionUser conversionUser;
+
+    public List<User> findAll(){
+        return userRepository.findAll();
         }
 
     public User addUser(User user){
@@ -36,21 +33,36 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<UserResponse> updateUser(Long id, User user,ModelMapper modelMapper){
+    public User updateUser(Long id, User user){
         if(!userRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
+            throw new DontFoundEntityException("Don't found this user");
         }
-        user.setId(id);
+        User usernow = userRepository.findById(id).get();
+        checkUpdateFields(usernow,user);
         user = userRepository.save(user);
-        return ResponseEntity.ok(user.toResponse(modelMapper));
+        return user;
     }
 
-    public ResponseEntity<User> removeUser(Long id){
+    public void removeUser(Long id){
         if(!userRepository.existsById(id)){
-            return ResponseEntity.notFound().build();
+            throw new DontFoundEntityException("Don't found this user");
         }
         userRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 
+    private void checkUpdateFields(User usernow, User user){
+        user.setId(usernow.getId());
+        if(user.getEmail()==null){
+            user.setEmail(usernow.getEmail());
+        }
+        if(user.getBornDate()==null){
+            user.setBornDate(usernow.getBornDate());
+        }
+        if(user.getCpf()==null){
+            user.setCpf(usernow.getCpf());
+        }
+        if(user.getName()==null){
+            user.setName(usernow.getName());
+        }
+    }
 }

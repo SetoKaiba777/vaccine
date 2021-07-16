@@ -1,11 +1,7 @@
 package com.kaibakorp.vaccine.domain.model;
 
-import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
-import org.modelmapper.ModelMapper;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name="USER")
@@ -15,16 +11,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="Name")
+    @Column(name = "Name")
     private String name;
 
-    @Column(name="CPF")
+    @Column(name = "CPF")
     private String cpf;
 
-    @Column(name="Email")
+    @Column(name = "Email")
     private String email;
 
-    @Column(name="Born_date")
+    @Column(name = "Born_date")
     private LocalDate bornDate;
 
     public String getName() {
@@ -66,8 +62,5 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public UserResponse toResponse(ModelMapper modelMapper){
-        return modelMapper.map(this,UserResponse.class);
-    }
 }
+

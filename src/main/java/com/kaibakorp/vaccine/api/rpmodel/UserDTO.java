@@ -1,10 +1,6 @@
 package com.kaibakorp.vaccine.api.rpmodel;
 
-import com.kaibakorp.vaccine.domain.model.User;
 import org.hibernate.validator.constraints.br.CPF;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -53,10 +49,6 @@ public class UserDTO {
 
     public void setBornDate(LocalDate bornDate) {
         this.bornDate = bornDate;
-    }
-
-    public User toEntity(ModelMapper modelMapper) {
-        return modelMapper.map(this, User.class);
     }
 }
 

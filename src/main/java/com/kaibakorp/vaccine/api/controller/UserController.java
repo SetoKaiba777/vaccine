@@ -1,5 +1,6 @@
 package com.kaibakorp.vaccine.api.controller;
 
+import com.kaibakorp.vaccine.api.rpmodel.ConversionUser;
 import com.kaibakorp.vaccine.api.rpmodel.UserDTO;
 import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
 import com.kaibakorp.vaccine.domain.model.User;
@@ -24,23 +25,31 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    ConversionUser conversionUser;
+
 
     @GetMapping
     public List<UserResponse> listUser(){
-        return userService.list(modelMapper);
+        List<User> users = userService.findAll();
+        return conversionUser.list(users,modelMapper);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse addUser(@Valid @RequestBody UserDTO input) {
-        User user = input.toEntity(modelMapper);
-        return userService.addUser(user).toResponse(modelMapper);
+        User user = conversionUser.toEntity(input,modelMapper);
+        return conversionUser.toResponse(userService.addUser(user),modelMapper);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO input) {
-        User user = input.toEntity(modelMapper);
-        return userService.updateUser(id, user,modelMapper);
+        User user = conversionUser.toEntity(input,modelMapper);
+        UserResponse upUser = conversionUser.toResponse(userService.updateUser(id,user),modelMapper);
+        return ResponseEntity.ok(upUser);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserResponse> delete(@PathVariable Long id){
+        userService.removeUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }

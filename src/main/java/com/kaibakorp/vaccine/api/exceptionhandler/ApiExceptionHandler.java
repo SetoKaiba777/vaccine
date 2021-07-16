@@ -1,5 +1,6 @@
 package com.kaibakorp.vaccine.api.exceptionhandler;
 
+import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
 import com.kaibakorp.vaccine.domain.exception.ServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Object> handleServiceExcpetion(ServiceException ex, WebRequest request) {
         var status = HttpStatus.BAD_REQUEST;
+        Problem problem = problemSet(ex.getMessage(), status);
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(DontFoundEntityException.class)
+    public ResponseEntity<Object> handleServiceExcpetion(DontFoundEntityException ex, WebRequest request) {
+        var status = HttpStatus.NOT_FOUND;
         Problem problem = problemSet(ex.getMessage(), status);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
