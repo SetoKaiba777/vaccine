@@ -1,35 +1,38 @@
 package com.kaibakorp.vaccine.api.controller;
 
-import com.kaibakorp.vaccine.api.rpmodel.UserDTO;
-import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
-import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
-import com.kaibakorp.vaccine.domain.exception.ServiceException;
+import com.kaibakorp.vaccine.api.conversion.ConversionVaccine;
+import com.kaibakorp.vaccine.api.rpmodel.VaccineDTO;
+import com.kaibakorp.vaccine.api.rpmodel.VaccineResponse;
 import com.kaibakorp.vaccine.domain.model.User;
 import com.kaibakorp.vaccine.domain.model.Vaccine;
-import com.kaibakorp.vaccine.domain.repository.VaccineRepository;
+import com.kaibakorp.vaccine.domain.repository.UserRepository;
 import com.kaibakorp.vaccine.domain.service.VaccineService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping("/vaccine-reg")
+@RequestMapping("/vaccine")
 public class VaccineController {
 
     @Autowired
     private VaccineService vaccineService;
 
     @Autowired
-    private VaccineRepository vaccineRepository;
+    private UserRepository userRepository;
+
+    private ConversionVaccine conversionVaccine;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vaccine addVac(@RequestBody Vaccine input) {
-        return vaccineRepository.save(input);
+    public VaccineResponse addVac(@RequestBody @Valid VaccineDTO input) {
+        Vaccine vaccine = conversionVaccine.toEntity(input, userRepository);
+        return conversionVaccine.toResponse(vaccineService.addVac(vaccine),modelMapper);
     }
-
 }

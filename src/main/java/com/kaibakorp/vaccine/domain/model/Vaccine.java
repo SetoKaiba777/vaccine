@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="VACCINE-REG")
+@Table(name="VACCINE_REG")
 public class Vaccine {
 
     @Id
@@ -15,6 +15,7 @@ public class Vaccine {
     private String vaccine;
 
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
     @Column(name="Vac_date")

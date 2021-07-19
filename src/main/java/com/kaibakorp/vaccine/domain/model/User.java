@@ -25,8 +25,8 @@ public class User {
     @Column(name = "Born_date")
     private LocalDate bornDate;
 
-    @OneToMany(mappedBy = "user")
-    private List<Vaccine> vaccines= new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Vaccine> vaccines= new ArrayList<>();
 
     public String getName() {
         return name;
@@ -68,12 +68,12 @@ public class User {
         this.id = id;
     }
 
-    public List<Vaccine> getVaccines() {
-        return vaccines;
-    }
+    //  public List<Vaccine> getVaccines() {
+        //      return vaccines;
+//    }
 
-    public void setVaccines(List<Vaccine> vaccines) {
-        this.vaccines = vaccines;
-    }
+    //   public void setVaccines(List<Vaccine> vaccines) {
+    //  this.vaccines = vaccines;
+//    }
 }
 

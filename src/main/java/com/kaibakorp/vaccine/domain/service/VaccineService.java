@@ -29,7 +29,8 @@ public class VaccineService {
 
     public Vaccine addVac(Vaccine vaccine){
         User user = userRepository.findById(vaccine.getUser().getId()).
-                orElseThrow(()->new DontFoundEntityException("Don't found this user on Database"));
+                orElseThrow(()-> new DontFoundEntityException("User don't found"));
+        vaccine.setUser(user);
         vaccine.setVacDate(LocalDate.now());
         return vaccineRepository.save(vaccine);
     }
