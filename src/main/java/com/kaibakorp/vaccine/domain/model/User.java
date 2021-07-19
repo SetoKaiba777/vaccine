@@ -2,6 +2,8 @@ package com.kaibakorp.vaccine.domain.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="USER")
@@ -22,6 +24,9 @@ public class User {
 
     @Column(name = "Born_date")
     private LocalDate bornDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Vaccine> vaccines= new ArrayList<>();
 
     public String getName() {
         return name;
@@ -61,6 +66,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Vaccine> getVaccines() {
+        return vaccines;
+    }
+
+    public void setVaccines(List<Vaccine> vaccines) {
+        this.vaccines = vaccines;
     }
 }
 

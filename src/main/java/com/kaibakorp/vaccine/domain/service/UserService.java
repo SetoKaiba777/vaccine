@@ -19,7 +19,6 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    ConversionUser conversionUser;
 
     public List<User> findAll(){
         return userRepository.findAll();

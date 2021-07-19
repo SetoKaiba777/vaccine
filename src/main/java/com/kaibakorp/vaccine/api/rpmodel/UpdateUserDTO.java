@@ -1,23 +1,20 @@
 package com.kaibakorp.vaccine.api.rpmodel;
 
 import org.hibernate.validator.constraints.br.CPF;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class UserDTO {
+public class UpdateUserDTO {
 
-
-    @NotBlank
     @Size(max=255)
     private String name;
 
-    @NotBlank
     @CPF
     private String cpf;
 
-    @NotBlank
     @Email
     @Size(max=255)
     private String email;
@@ -56,4 +53,3 @@ public class UserDTO {
         this.bornDate = bornDate;
     }
 }
-

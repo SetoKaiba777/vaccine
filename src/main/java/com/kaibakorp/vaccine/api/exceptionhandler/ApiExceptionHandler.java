@@ -43,7 +43,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
             fields.add(new Problem.Field(name, msg));
         }
-        Problem problem = problemSet("One or more fields are wrong filled",status);
+        Problem problem = problemSet("One or more fields don't be filled correctly",status);
         problem.setFields(fields);
         return super.handleExceptionInternal(ex,problem, headers,status,request);
     }
