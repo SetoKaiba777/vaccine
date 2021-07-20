@@ -7,13 +7,23 @@ import com.kaibakorp.vaccine.domain.model.Vaccine;
 import com.kaibakorp.vaccine.domain.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
+@Service
 public class ConversionVaccine {
 
-    public static Vaccine toEntity(VaccineDTO vaccineDTO, UserRepository userRepository) {
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public Vaccine toEntity(VaccineDTO vaccineDTO) {
         User user = userRepository.findByEmail(vaccineDTO.getUserEmail());
         if(user==null){
             throw new DontFoundEntityException("Don't found this user e-mail");
@@ -24,17 +34,17 @@ public class ConversionVaccine {
         return vaccine;
     }
 
-    public static VaccineResponse toResponse(Vaccine vaccine, ModelMapper modelMapper){
+    public VaccineResponse toResponse(Vaccine vaccine){
         return modelMapper.map(vaccine, VaccineResponse.class);
     }
 
-//    public static User updateUserToEntity(UpdateUserDTO UpdateUser, ModelMapper modelMapper){
-//        return modelMapper.map(UpdateUser,User.class);
-//    }
+    public Vaccine updateVacToEntity(UpdateVaccineDTO updateVaccine){
+        return modelMapper.map(updateVaccine,Vaccine.class);
+    }
 
-    public static List<VaccineResponse> list(List<Vaccine> vaccines, ModelMapper modelMapper){
+    public List<VaccineResponse> list(List<Vaccine> vaccines){
         return vaccines.stream().
-                map(vaccine -> modelMapper.map(vaccine,VaccineResponse.class)).
+                map(vaccine -> this.toResponse(vaccine)).
                 collect(Collectors.toList());
     }
 }

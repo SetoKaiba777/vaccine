@@ -21,32 +21,34 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private UserService userService;
 
+    @Autowired
     private ConversionUser conversionUser;
 
 
     @GetMapping
     public List<UserResponse> listUser(){
         List<User> users = userService.findAll();
-        return conversionUser.list(users,modelMapper);
+        return conversionUser.list(users);
     }
 
+    @GetMapping("/{id}")
+    public UserResponse listUser(@PathVariable Long id){
+        return conversionUser.toResponse(userService.findUser(id));
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse addUser(@Valid @RequestBody UserDTO input) {
-        User user = conversionUser.toEntity(input,modelMapper);
-        return conversionUser.toResponse(userService.addUser(user),modelMapper);
+        User user = conversionUser.toEntity(input);
+        return conversionUser.toResponse(userService.addUser(user));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDTO input) {
-        User user = conversionUser.updateUserToEntity(input,modelMapper);
-        UserResponse upUser = conversionUser.toResponse(userService.updateUser(id,user),modelMapper);
+        User user = conversionUser.updateUserToEntity(input);
+        UserResponse upUser = conversionUser.toResponse(userService.updateUser(id,user));
         return ResponseEntity.ok(upUser);
     }
     @DeleteMapping("/{id}")

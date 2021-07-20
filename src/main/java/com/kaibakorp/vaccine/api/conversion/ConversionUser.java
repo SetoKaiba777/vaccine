@@ -5,28 +5,35 @@ import com.kaibakorp.vaccine.api.rpmodel.UserDTO;
 import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
 import com.kaibakorp.vaccine.domain.model.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class ConversionUser {
 
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public static User toEntity(UserDTO userDTO, ModelMapper modelMapper) {
+    public User toEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
 
-    public static UserResponse toResponse(User user, ModelMapper modelMapper){
+    public UserResponse toResponse(User user){
         return modelMapper.map(user,UserResponse.class);
     }
 
-    public static User updateUserToEntity(UpdateUserDTO UpdateUser, ModelMapper modelMapper){
+    public User updateUserToEntity(UpdateUserDTO UpdateUser){
         return modelMapper.map(UpdateUser,User.class);
     }
 
-    public static List<UserResponse> list(List<User> users,ModelMapper modelMapper){
+    public List<UserResponse> list(List<User> users){
         return users.stream().
-                map(user -> modelMapper.map(user,UserResponse.class)).
+                map(user -> this.toResponse(user)).
                 collect(Collectors.toList());
     }
 }

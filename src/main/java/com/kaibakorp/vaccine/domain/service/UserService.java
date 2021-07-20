@@ -19,6 +19,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public User findUser(Long id){
+        return userRepository.findById(id).
+                orElseThrow(()-> new DontFoundEntityException("Don't found this user"));
+    }
 
     public List<User> findAll(){
         return userRepository.findAll();
