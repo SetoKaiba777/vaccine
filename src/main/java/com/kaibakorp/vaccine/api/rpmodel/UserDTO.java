@@ -1,6 +1,8 @@
 package com.kaibakorp.vaccine.api.rpmodel;
 
 import org.hibernate.validator.constraints.br.CPF;
+
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

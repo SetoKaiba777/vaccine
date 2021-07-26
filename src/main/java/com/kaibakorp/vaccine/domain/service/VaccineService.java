@@ -1,12 +1,10 @@
 package com.kaibakorp.vaccine.domain.service;
 
 import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
-import com.kaibakorp.vaccine.domain.exception.ServiceException;
 import com.kaibakorp.vaccine.domain.model.User;
 import com.kaibakorp.vaccine.domain.model.Vaccine;
 import com.kaibakorp.vaccine.domain.repository.UserRepository;
 import com.kaibakorp.vaccine.domain.repository.VaccineRepository;
-import org.hibernate.validator.internal.engine.ValidatorContextImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

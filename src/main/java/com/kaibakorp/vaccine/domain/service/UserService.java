@@ -1,7 +1,5 @@
 package com.kaibakorp.vaccine.domain.service;
 
-
-import com.kaibakorp.vaccine.api.conversion.ConversionUser;
 import com.kaibakorp.vaccine.domain.exception.DontFoundEntityException;
 import com.kaibakorp.vaccine.domain.exception.ServiceException;
 import com.kaibakorp.vaccine.domain.model.User;
@@ -29,10 +27,7 @@ public class UserService {
         }
 
     public User addUser(User user){
-        User userExisits = userRepository.findByEmail(user.getEmail());
-        if(userExisits!=null && !userExisits.equals(user)){
-            throw new ServiceException("This email already in data system");
-        }
+        this.exist(user);
         return userRepository.save(user);
     }
 
@@ -53,7 +48,19 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    private void exist(User user){
+        User userEmailExisits = userRepository.findByEmail(user.getEmail());
+        User userCpfExisits = userRepository.findByCpf(user.getCpf());
+        if(userEmailExisits!=null && !userEmailExisits.equals(user)){
+            throw new ServiceException("This email already in data system");
+        }
+        if(userCpfExisits!=null && !userCpfExisits.equals(user)){
+            throw new ServiceException("This CPF already in data system");
+        }
+    }
+
     private void checkUpdateFields(User usernow, User user){
+        this.exist(user);
         user.setId(usernow.getId());
         if(user.getEmail()==null){
             user.setEmail(usernow.getEmail());

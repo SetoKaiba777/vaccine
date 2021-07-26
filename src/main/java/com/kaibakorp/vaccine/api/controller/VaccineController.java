@@ -2,7 +2,6 @@ package com.kaibakorp.vaccine.api.controller;
 
 import com.kaibakorp.vaccine.api.conversion.ConversionVaccine;
 import com.kaibakorp.vaccine.api.rpmodel.UpdateVaccineDTO;
-import com.kaibakorp.vaccine.api.rpmodel.UserResponse;
 import com.kaibakorp.vaccine.api.rpmodel.VaccineDTO;
 import com.kaibakorp.vaccine.api.rpmodel.VaccineResponse;
 import com.kaibakorp.vaccine.domain.model.Vaccine;
