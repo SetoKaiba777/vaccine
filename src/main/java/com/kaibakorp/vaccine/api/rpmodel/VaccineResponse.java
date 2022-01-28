@@ -1,8 +1,5 @@
 package com.kaibakorp.vaccine.api.rpmodel;
 
-import com.kaibakorp.vaccine.domain.model.User;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class VaccineResponse {
